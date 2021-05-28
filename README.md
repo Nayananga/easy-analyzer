@@ -2,6 +2,9 @@
 
 This application allows you to upload and analyze any data set using easy 2d line charts.
 
+![Easy Analyzer Screenshot](screenshots/graph.png)
+
+
 ## Running this App Locally
 
 ### System Requirements
