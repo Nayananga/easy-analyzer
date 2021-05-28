@@ -96,3 +96,10 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
+/.idea/.gitignore
+/.idea/easy-analyzer.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
