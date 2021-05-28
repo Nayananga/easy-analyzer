@@ -7,27 +7,25 @@ from data_processor import read_data, generate_plot_data
 async def serve(q: Q):
     q.page.drop()
 
-    if 'file_upload' in q.args:
-        plot_data = read_data(q.args.file_upload)
-        q.client.data = plot_data
-
-    elif 'draw' in q.args:
-        plot_data = q.client.data
-        plot_data = generate_plot_data(plot_data, q.args.x_axis, q.args.y_axis)
-
-        v = q.page.add('content', ui.plot_card(
-            box=ui.boxes('content'),
-            title=q.args.title,
-            data=data('group x y'),
-            plot=ui.plot([ui.mark(type='line', x='=x', x_scale='linear', y='=y', y_scale='linear', color='=group',
-                                  x_title=q.args.x_axis)])
-        ))
-
-        v.data = plot_data
-
     if q.client.initialized:
 
-        plot_data = q.client.data
+        file_data = q.client.data if q.client.data else None
+
+        if 'file_upload' in q.args:
+            file_data = read_data(q.args.file_upload)
+            q.client.data = file_data
+        elif 'draw' in q.args:
+            plot_data = generate_plot_data(file_data, q.args.x_axis, q.args.y_axis)
+
+            v = q.page.add('content', ui.plot_card(
+                box=ui.boxes('content'),
+                title=q.args.title,
+                data=data('group x y'),
+                plot=ui.plot([ui.mark(type='line', x='=x', x_scale='linear', y='=y', y_scale='linear', color='=group',
+                                      x_title=q.args.x_axis)])
+            ))
+
+            v.data = plot_data
 
         q.page['meta_1'] = ui.meta_card(box='', layouts=[
             ui.layout(
@@ -85,11 +83,11 @@ async def serve(q: Q):
             ui.message_bar(type='success', text=f"Great! your file uploaded successfully!"),
             ui.separator(),
             ui.dropdown(name='x_axis', label='Pick your X axis', choices=[
-                ui.choice(name=x, label=x) for x in plot_data
+                ui.choice(name=x, label=x) for x in file_data
             ]),
             ui.separator(),
             ui.dropdown(name='y_axis', label='Pick your Y axis', values=[], choices=[
-                ui.choice(name=y, label=y) for y in plot_data
+                ui.choice(name=y, label=y) for y in file_data
             ]),
             ui.separator(),
             ui.textbox(name='title', label='Enter your plot title'),
