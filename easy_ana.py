@@ -1,7 +1,6 @@
 from h2o_wave import main, app, Q, ui, data
 
-import data_processor
-from data_processor import read_data
+from data_processor import read_data, generate_plot_data
 
 
 @app('/easy_ana')
@@ -126,7 +125,7 @@ async def serve(q: Q):
             plot=ui.plot([ui.mark(type='line', x='=x', x_scale='linear', y='=y', y_scale='linear', color='=group', x_title=q.args.x_axis)])
         ))
 
-        v.data = data_processor.generate_plot_data(plot_data, q.args.x_axis, q.args.y_axis)
+        v.data = generate_plot_data(plot_data, q.args.x_axis, q.args.y_axis)
 
         q.page['controls'] = ui.form_card(box=ui.boxes('sidebar'), items=[
             ui.message_bar(type='success', text=f"Great! your file uploaded successfully!"),

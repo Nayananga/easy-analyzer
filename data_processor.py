@@ -1,8 +1,6 @@
 import csv
 from collections import defaultdict
 
-import numpy as np
-
 import config
 
 
@@ -27,10 +25,3 @@ def generate_plot_data(data, x_axis, y_axis_array):
         for group in y_axis_array:
             plot_data.append([group, x, data[group][i]])
     return plot_data
-
-
-if __name__ == '__main__':
-    path = ['/_f/099f1ee1-81e2-4ec8-bf4c-c6a1cb221f88/log.csv']
-    generate_plot_data(read_data(path), 'Thread pool size',
-                       ['Thread pool size', 'Current 10 Second Throughput', 'Throughput Difference', 'In pogress count',
-                        'Average Latency', '99th percentile Latency'])
