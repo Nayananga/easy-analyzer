@@ -4,7 +4,7 @@ import config
 
 
 def read_data(file_path):
-    file_path = file_path[0].replace("_", "")  # TODO: Bug fix
+    file_path = file_path[0].replace("_", "", 1)  # TODO: Bug fix
     file_path = config.WAVE_SDK_ROOT_PATH + '/data' + file_path
 
     with open(file_path, 'r') as csv_file:
